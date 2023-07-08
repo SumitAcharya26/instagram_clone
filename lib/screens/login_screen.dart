@@ -4,6 +4,12 @@ import 'package:instagram_clone/screens/signup_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/widgets/textfield_input.dart';
 
+import '../resources/auth_methods.dart';
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout.dart';
+import '../responsive/web_screen_layout.dart';
+import '../utils/utils.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -20,6 +26,23 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  void loginUser() async {
+    String res = await AuthMethod().loginUser(
+        email: _emailController.text, password: _passwordController.text);
+    if (res != 'Success') {
+      showSnackBar(context, res);
+    } else {
+      // showSnackBar(context, 'Success');
+      Navigator.push(context, MaterialPageRoute(
+        builder: (context) {
+          return const ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout());
+        },
+      ));
+    }
   }
 
   @override
@@ -53,7 +76,9 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         const SizedBox(height: 24.0),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            loginUser();
+          },
           child: Container(
             width: double.infinity,
             alignment: Alignment.center,
