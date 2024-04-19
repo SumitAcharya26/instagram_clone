@@ -2,7 +2,7 @@ const UserService = require('../services/user.services');
 
 exports.register = async (req, res, next) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, username } = req.body;
 
         const user = await UserService.checkUser(email);
 
@@ -12,7 +12,7 @@ exports.register = async (req, res, next) => {
                 status: false, success: "Email Already in Use"
             });
         }
-        else if (!email.includes('@')) {
+        else if (!email.includes('@gmail')) {
 
             res.json({
                 status: false, success: "Please Enter Valid Email"
@@ -22,7 +22,7 @@ exports.register = async (req, res, next) => {
                 status: false, success: "Password length must be 6 or more than 6 characters"
             });
         } else {
-            const successRes = await UserService.registerUser(email, password);
+            const successRes = await UserService.registerUser(email, password, username);
 
             res.json({
                 status: true, success: "User Registered Successfully"

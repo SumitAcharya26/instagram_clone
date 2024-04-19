@@ -14,3 +14,16 @@ exports.post = async (req, res, next) => {
         throw err
     }
 }
+
+
+exports.getPosts = async (req, res, next) => {
+    try {
+        const getPosts = await PostService.getPostData(        );
+        res.status(200).json({
+            status: true,
+            data: getPosts
+        });
+    } catch (err) {
+        throw err
+    }
+}

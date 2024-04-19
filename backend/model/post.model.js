@@ -1,9 +1,15 @@
 const mongoose = require("mongoose");
 const db = require("../config/db");
 
+const fileSchema = new mongoose.Schema({
+    filename: String,
+    contentType: String,
+    data: Buffer
+});
+
 const postSchema = mongoose.Schema({
     dataPublished: {
-        type:String
+        type: String
     },
     description: {
         type: String
@@ -14,7 +20,7 @@ const postSchema = mongoose.Schema({
         type: String
     },
     postUrl: {
-        type: String
+        type: fileSchema
     },
     profImage: {
         type: String
